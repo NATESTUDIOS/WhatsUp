@@ -1,1 +1,1361 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What's Up — World News. Football. The Group Chat.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sage: #4A7C59;
+    --mint: #7EC8A4;
+    --lime: #C8E6C9;
+    --deep: #1B3A2D;
+    --ink: #0F1F17;
+    --cream: #F5F2EC;
+    --warm: #FFFDF7;
+    --accent: #A8D5B5;
+    --gold: #D4A843;
+    --muted: #8A9E90;
+    --card-bg: #FFFFFF;
+    --shadow: rgba(27, 58, 45, 0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ───── NOISE TEXTURE ───── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ───── NAVBAR ───── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255,253,247,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(74,124,89,0.12);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-dot {
+    width: 32px; height: 32px;
+    background: var(--sage);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: pulse-dot 3s ease-in-out infinite;
+  }
+
+  .logo-dot::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid var(--mint);
+    opacity: 0.5;
+    animation: ring-expand 3s ease-in-out infinite;
+  }
+
+  .logo-dot span {
+    color: white;
+    font-family: 'DM Mono', monospace;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+  }
+  @keyframes ring-expand {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.3); opacity: 0; }
+  }
+
+  .nav-wordmark {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--deep);
+    letter-spacing: -0.3px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--sage); }
+
+  .nav-cta {
+    background: var(--sage);
+    color: white !important;
+    padding: 10px 22px;
+    border-radius: 100px;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    transition: background 0.2s, transform 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--deep) !important; transform: translateY(-1px); }
+
+  /* ───── HERO ───── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 48px 80px;
+    gap: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-circle {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(126,200,164,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+    top: -100px; right: -200px;
+    pointer-events: none;
+  }
+
+  .hero-bg-leaf {
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 400px; height: 400px;
+    opacity: 0.06;
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--lime);
+    color: var(--deep);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+    animation: fade-up 0.6s ease both;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--sage);
+    border-radius: 50%;
+    animation: pulse-dot 2s infinite;
+  }
+
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 5.5vw, 78px);
+    font-weight: 900;
+    line-height: 1.0;
+    color: var(--ink);
+    margin-bottom: 24px;
+    animation: fade-up 0.7s ease 0.1s both;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--sage);
+    position: relative;
+  }
+
+  .hero-headline em::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; left: 0; right: 0;
+    height: 3px;
+    background: var(--mint);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: underline-draw 0.8s ease 0.9s forwards;
+  }
+
+  @keyframes underline-draw { to { transform: scaleX(1); } }
+
+  .hero-sub {
+    font-size: 18px;
+    line-height: 1.7;
+    color: #4A5E52;
+    max-width: 480px;
+    margin-bottom: 40px;
+    animation: fade-up 0.7s ease 0.2s both;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fade-up 0.7s ease 0.3s both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--deep);
+    color: white;
+    padding: 16px 32px;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(27,58,45,0.25);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(27,58,45,0.3);
+    background: var(--sage);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--sage);
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 16px 8px;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--sage); }
+
+  .hero-tagline {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--muted);
+    animation: fade-up 0.7s ease 0.4s both;
+  }
+
+  .tagline-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .tagline-dot {
+    width: 6px; height: 6px;
+    background: var(--mint);
+    border-radius: 50%;
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ───── HERO VISUAL ───── */
+  .hero-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: fade-up 0.8s ease 0.3s both;
+    position: relative;
+  }
+
+  .up-card {
+    background: white;
+    border-radius: 20px;
+    padding: 24px 28px;
+    box-shadow: 0 2px 20px var(--shadow), 0 1px 4px rgba(0,0,0,0.04);
+    border-left: 4px solid var(--sage);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .up-card:hover {
+    transform: translateY(-3px) translateX(3px);
+    box-shadow: 0 8px 40px var(--shadow);
+  }
+
+  .up-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 80px; height: 80px;
+    background: radial-gradient(circle at top right, rgba(126,200,164,0.12), transparent);
+    border-radius: 0 20px 0 80px;
+  }
+
+  .up-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .up-card-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .up-card-meter {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--sage);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .meter-bar {
+    width: 48px;
+    height: 4px;
+    background: var(--lime);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .meter-fill {
+    height: 100%;
+    background: var(--sage);
+    border-radius: 2px;
+    animation: meter-grow 1.5s ease 0.8s both;
+    transform-origin: left;
+  }
+
+  @keyframes meter-grow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  .up-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--deep);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .up-card-short {
+    font-size: 14px;
+    color: #5A6E62;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .up-card-insight {
+    background: var(--lime);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--deep);
+    line-height: 1.5;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .insight-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .up-card-tags {
+    margin-top: 12px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: #F0F7F3;
+    color: var(--sage);
+    border: 1px solid rgba(74,124,89,0.15);
+  }
+
+  .card-world { border-left-color: var(--sage); }
+  .card-football { border-left-color: #3B82C4; }
+
+  .card-football .up-card-insight { background: #EFF6FF; }
+  .card-football .up-card-insight .insight-icon { color: #3B82C4; }
+  .card-football .tag { background: #EFF6FF; color: #3B82C4; border-color: rgba(59,130,196,0.15); }
+  .card-football .meter-fill { background: #3B82C4; }
+  .card-football .meter-bar { background: #DBEAFE; }
+  .card-football .up-card-meter { color: #3B82C4; }
+
+  .card-floating {
+    position: absolute;
+    right: -24px;
+    bottom: -24px;
+    width: 160px;
+    background: var(--deep);
+    color: white;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 12px 40px rgba(27,58,45,0.35);
+    font-size: 13px;
+    animation: float-card 4s ease-in-out infinite;
+  }
+
+  @keyframes float-card {
+    0%, 100% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(-8px) rotate(1deg); }
+  }
+
+  .card-floating-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--mint);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .card-floating-stat {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .card-floating-sub {
+    font-size: 11px;
+    color: var(--accent);
+    margin-top: 4px;
+  }
+
+  /* ───── SECTION SHARED ───── */
+  section {
+    padding: 100px 48px;
+  }
+
+  .section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 20px;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    width: 20px; height: 2px;
+    background: var(--mint);
+    border-radius: 2px;
+  }
+
+  .section-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 3.5vw, 52px);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--ink);
+    max-width: 600px;
+  }
+
+  .section-headline em {
+    font-style: italic;
+    color: var(--sage);
+  }
+
+  /* ───── PROBLEM SECTION ───── */
+  .problem {
+    background: var(--deep);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .problem::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%237EC8A4' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .problem .section-eyebrow { color: var(--mint); }
+  .problem .section-headline { color: white; }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 56px;
+  }
+
+  .problem-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .problem-card:hover { background: rgba(255,255,255,0.08); }
+
+  .problem-card-icon {
+    font-size: 36px;
+    margin-bottom: 20px;
+    display: block;
+    line-height: 1;
+  }
+
+  .problem-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: white;
+  }
+
+  .problem-card p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .problem-stat {
+    grid-column: 1 / -1;
+    background: var(--sage);
+    border: none;
+    text-align: center;
+    padding: 40px;
+  }
+
+  .problem-stat .big-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 7vw, 80px);
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .problem-stat p {
+    font-size: 18px;
+    color: rgba(255,255,255,0.8);
+  }
+
+  /* ───── HOW IT WORKS ───── */
+  .how {
+    background: var(--cream);
+  }
+
+  .pipeline {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-top: 56px;
+    position: relative;
+  }
+
+  .pipeline-step {
+    flex: 1;
+    text-align: center;
+    padding: 32px 24px;
+    position: relative;
+  }
+
+  .pipeline-step::after {
+    content: '→';
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: var(--mint);
+    z-index: 2;
+  }
+
+  .pipeline-step:last-child::after { display: none; }
+
+  .step-num {
+    width: 48px; height: 48px;
+    background: var(--deep);
+    color: var(--mint);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 auto 20px;
+  }
+
+  .step-icon {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .pipeline-step h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--deep);
+    margin-bottom: 10px;
+  }
+
+  .pipeline-step p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #5A6E62;
+  }
+
+  /* ───── GROUPS ───── */
+  .groups-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 56px;
+  }
+
+  .group-card {
+    background: white;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 2px 16px var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .group-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px var(--shadow);
+  }
+
+  .group-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+
+  .group-card.fan::before { background: linear-gradient(90deg, #3B82C4, #60A5FA); }
+  .group-card.commuter::before { background: linear-gradient(90deg, var(--sage), var(--mint)); }
+  .group-card.curious::before { background: linear-gradient(90deg, var(--gold), #F59E0B); }
+
+  .group-emoji { font-size: 36px; margin-bottom: 16px; display: block; }
+
+  .group-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--deep);
+    margin-bottom: 8px;
+  }
+
+  .group-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #5A6E62;
+    margin-bottom: 16px;
+  }
+
+  .group-url {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    background: #F0F7F3;
+    padding: 6px 12px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+  /* ───── SEO SECTION ───── */
+  .seo {
+    background: var(--deep);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .seo-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .seo .section-eyebrow { color: var(--mint); }
+  .seo .section-headline { color: white; }
+
+  .seo-sub {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.65);
+    margin-top: 20px;
+    max-width: 440px;
+  }
+
+  .serp-mock {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .serp-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #F8FAFB;
+    border-radius: 100px;
+    margin-bottom: 20px;
+    border: 1px solid #E5E7EB;
+  }
+
+  .serp-bar-icon { font-size: 16px; }
+  .serp-bar-text { font-size: 13px; color: #374151; flex: 1; }
+
+  .serp-result {
+    padding: 16px 0;
+    border-bottom: 1px solid #F0F4F1;
+  }
+  .serp-result:last-child { border-bottom: none; }
+
+  .serp-url { font-size: 11px; color: #188038; margin-bottom: 4px; }
+
+  .serp-title {
+    font-size: 16px;
+    color: #1A0DAB;
+    margin-bottom: 4px;
+    line-height: 1.4;
+    cursor: pointer;
+  }
+  .serp-title:hover { text-decoration: underline; }
+
+  .serp-snippet {
+    font-size: 13px;
+    color: #545454;
+    line-height: 1.5;
+  }
+
+  .serp-featured {
+    background: #E8F5E9;
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 8px;
+    border-left: 3px solid var(--sage);
+  }
+
+  .serp-featured-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--sage);
+    margin-bottom: 6px;
+  }
+
+  .serp-featured-text {
+    font-size: 13px;
+    color: #1B3A2D;
+    line-height: 1.5;
+  }
+
+  /* ───── MONETIZATION ───── */
+  .mono-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-top: 56px;
+  }
+
+  .mono-card {
+    background: white;
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 2px 16px var(--shadow);
+    text-align: center;
+  }
+
+  .mono-phase {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+
+  .phase-1 { background: #F0F7F3; color: var(--sage); }
+  .phase-2 { background: #EFF6FF; color: #3B82C4; }
+  .phase-3 { background: #FFFBEB; color: var(--gold); }
+
+  .mono-icon { font-size: 40px; margin-bottom: 16px; }
+
+  .mono-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--deep);
+    margin-bottom: 10px;
+  }
+
+  .mono-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #5A6E62;
+  }
+
+  /* ───── CTA SECTION ───── */
+  .cta {
+    background: linear-gradient(135deg, var(--sage) 0%, var(--deep) 100%);
+    color: white;
+    text-align: center;
+    padding: 120px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .cta-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .cta-sub {
+    font-size: 18px;
+    color: rgba(255,255,255,0.75);
+    max-width: 500px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+    position: relative;
+  }
+
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .btn-white {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    color: var(--deep);
+    padding: 16px 32px;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+  }
+
+  .btn-outline-white {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: white;
+    padding: 16px 32px;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 2px solid rgba(255,255,255,0.4);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-outline-white:hover {
+    border-color: white;
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* ───── FOOTER ───── */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.5);
+    padding: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .footer-dot {
+    width: 24px; height: 24px;
+    background: var(--sage);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer-dot span {
+    color: white;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+  }
+
+  .footer-wordmark {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.4);
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--mint); }
+
+  /* ───── SCROLL REVEAL ───── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ───── RESPONSIVE ───── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; }
+    .hero-visual { display: none; }
+    section { padding: 64px 24px; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .groups-grid { grid-template-columns: 1fr; }
+    .seo-inner { grid-template-columns: 1fr; }
+    .mono-grid { grid-template-columns: 1fr; }
+    .pipeline { flex-direction: column; }
+    .pipeline-step::after { content: '↓'; right: 50%; bottom: -20px; top: auto; transform: translateX(50%); }
+    footer { flex-direction: column; gap: 24px; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+    .cta { padding: 80px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-dot"><span>?</span></div>
+    <span class="nav-wordmark">What's Up</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#groups">Groups</a></li>
+    <li><a href="#seo">Why It Wins</a></li>
+    <li><a href="#cta" class="nav-cta">Get Early Access</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-circle"></div>
+
+  <!-- SVG leaf BG -->
+  <svg class="hero-bg-leaf" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <path d="M100,0 C155,0 200,45 200,100 C200,155 100,200 100,200 C100,200 0,155 0,100 C0,45 45,0 100,0 Z" fill="#4A7C59"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">The Green Dot of Clarity</div>
+    <h1 class="hero-headline">
+      News for the<br>
+      <em>pub, not the</em><br>
+      lecture hall.
+    </h1>
+    <p class="hero-sub">
+      We take the world's messiest news and football coverage, run it through AI + human curation, and give you one card that tells you exactly why it matters — and who it matters to.
+    </p>
+    <div class="hero-actions">
+      <a href="#cta" class="btn-primary">
+        <span>🌿</span> Get Early Access
+      </a>
+      <a href="#how" class="btn-ghost">
+        See how it works →
+      </a>
+    </div>
+    <div class="hero-tagline">
+      <div class="tagline-item"><div class="tagline-dot"></div> World News</div>
+      <div class="tagline-item"><div class="tagline-dot"></div> Football</div>
+      <div class="tagline-item"><div class="tagline-dot"></div> The Group Chat</div>
+    </div>
+  </div>
+
+  <!-- UP CARDS VISUAL -->
+  <div class="hero-visual">
+    <!-- World card -->
+    <div class="up-card card-world">
+      <div class="up-card-meta">
+        <span class="up-card-type">🌍 World</span>
+        <div class="up-card-meter">
+          <div class="meter-bar"><div class="meter-fill" style="width:85%"></div></div>
+          85% Care
+        </div>
+      </div>
+      <div class="up-card-title">G7 Agrees on Russian Oil Price Cap</div>
+      <div class="up-card-short">Russian oil will have a fixed global maximum price starting next month.</div>
+      <div class="up-card-insight">
+        <span class="insight-icon">🟢</span>
+        <span>This might lower gas prices next month, but it's a slow burn. Don't refuel in panic just yet.</span>
+      </div>
+      <div class="up-card-tags">
+        <span class="tag">Commuters</span>
+        <span class="tag">Drivers</span>
+        <span class="tag">Economy Watchers</span>
+      </div>
+    </div>
+
+    <!-- Football card -->
+    <div class="up-card card-football">
+      <div class="up-card-meta">
+        <span class="up-card-type">⚽ Football</span>
+        <div class="up-card-meter">
+          <div class="meter-bar"><div class="meter-fill" style="width:92%"></div></div>
+          92% Care
+        </div>
+      </div>
+      <div class="up-card-title">KDB Out for 4 Weeks — Hamstring</div>
+      <div class="up-card-short">Kevin De Bruyne confirmed injured ahead of crucial Premier League run-in.</div>
+      <div class="up-card-insight">
+        <span class="insight-icon">💡</span>
+        <span>Foden plays central. Buy him in FPL now before his price rises by the weekend.</span>
+      </div>
+      <div class="up-card-tags">
+        <span class="tag">Man City Fans</span>
+        <span class="tag">FPL Managers</span>
+      </div>
+    </div>
+
+    <!-- Floating stat -->
+    <div class="card-floating">
+      <div class="card-floating-label">Today's Cards</div>
+      <div class="card-floating-stat">24</div>
+      <div class="card-floating-sub">Across 6 Groups</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="section-eyebrow">The Problem</div>
+  <h2 class="section-headline">We're drowning in information, <em>starving for context.</em></h2>
+
+  <div class="problem-grid reveal">
+    <div class="problem-card">
+      <span class="problem-card-icon">📰</span>
+      <h3>World News Is Jargon</h3>
+      <p>Written by policy wonks for policy wonks. 1,200 words of context-free analysis that tells you what happened but never why you should care.</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-card-icon">📱</span>
+      <h3>Football Is Clickbait</h3>
+      <p>45 slides for one transfer rumour. Autoplaying videos. Impossible to read on your lunch break without losing 20 minutes of your life.</p>
+    </div>
+    <div class="problem-card problem-stat">
+      <div class="big-text">73%</div>
+      <p>of people scroll past important news because the format is exhausting — not the content.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="section-eyebrow">How It Works</div>
+  <h2 class="section-headline">AI that re-contextualises, not <em>regurgitates.</em></h2>
+
+  <div class="pipeline reveal">
+    <div class="pipeline-step">
+      <div class="step-num">01</div>
+      <span class="step-icon">📡</span>
+      <h3>Ingest</h3>
+      <p>Curated RSS from Reuters, The Athletic, AP — only trusted, original sources. No aggregator spam.</p>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">02</div>
+      <span class="step-icon">✂️</span>
+      <h3>Extract</h3>
+      <p>AI strips adjectives and adverbs. Leaves only the 5W1H. Pure signal, zero noise.</p>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">03</div>
+      <span class="step-icon">🎯</span>
+      <h3>Group Logic</h3>
+      <p>A custom layer assigns each insight to the specific audience who actually cares about it.</p>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">04</div>
+      <span class="step-icon">👁️</span>
+      <h3>Human Eye</h3>
+      <p>One person clicks Approve. This manual step is our quality moat. No AI slop ships.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GROUPS -->
+<section id="groups">
+  <div class="section-eyebrow">The Groups</div>
+  <h2 class="section-headline">Not one website. <em>Micro-communities.</em></h2>
+  <p style="margin-top:16px; font-size:16px; color:#5A6E62; max-width:520px; line-height:1.7;">Navigate to your group and the entire world is instantly filtered for you. No login. No algorithm. No doom scroll.</p>
+
+  <div class="groups-grid reveal">
+    <div class="group-card fan">
+      <span class="group-emoji">⚽</span>
+      <h3>The Fan</h3>
+      <p>Fantasy Football tips before the price changes. Transfer news without the clickbait. Pre-match context in 60 seconds.</p>
+      <div class="group-url">/group/football</div>
+    </div>
+    <div class="group-card commuter">
+      <span class="group-emoji">🚇</span>
+      <h3>The Commuter</h3>
+      <p>Is the train strike real or a rumour? What does the budget mean for your mortgage? Answers for the 8:17 to Victoria.</p>
+      <div class="group-url">/group/commuter</div>
+    </div>
+    <div class="group-card curious">
+      <span class="group-emoji">🧠</span>
+      <h3>The Curious</h3>
+      <p>Understand the debt ceiling without an MBA. Follow Gaza without a PhD in geopolitics. Just the signal.</p>
+      <div class="group-url">/group/curious</div>
+    </div>
+  </div>
+</section>
+
+<!-- SEO -->
+<section class="seo" id="seo">
+  <div class="seo-inner">
+    <div class="reveal">
+      <div class="section-eyebrow">The SEO Advantage</div>
+      <h2 class="section-headline">We don't compete for keywords. We <em>own intent.</em></h2>
+      <p class="seo-sub">
+        Every Up Card is wrapped in FAQ Schema. Google scrapes our "Why It Matters" box and puts it at the top of search results — not ESPN, not BBC. Us.
+      </p>
+      <div style="margin-top:32px; display:flex; flex-direction:column; gap:12px;">
+        <div style="display:flex; align-items:flex-start; gap:12px;">
+          <span style="color:var(--mint); font-size:18px; margin-top:2px;">✗</span>
+          <div>
+            <div style="font-size:13px; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:1px; font-size:11px; margin-bottom:2px;">Competitor</div>
+            <div style="font-size:15px; color:rgba(255,255,255,0.6);">"Arsenal vs Chelsea match report"</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.3);">Too crowded. Thousands of results.</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:12px;">
+          <span style="color:var(--mint); font-size:18px; margin-top:2px;">✓</span>
+          <div>
+            <div style="font-size:11px; color:var(--mint); text-transform:uppercase; letter-spacing:1px; margin-bottom:2px;">Our Keyword</div>
+            <div style="font-size:15px; color:white;">"What does the Chelsea draw mean for Arsenal's title chances?"</div>
+            <div style="font-size:12px; color:var(--accent);">Wide open. High intent. Featured snippet.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="serp-mock reveal">
+      <div class="serp-bar">
+        <span class="serp-bar-icon">🔍</span>
+        <span class="serp-bar-text">what does chelsea draw mean for arsenal title</span>
+      </div>
+      <div class="serp-result">
+        <div class="serp-url">whatsup.green › group › football › arsenal-title</div>
+        <div class="serp-title">What Does the Chelsea Draw Mean for Arsenal's Title Chances?</div>
+        <div class="serp-snippet">The 2-2 draw at Stamford Bridge leaves Arsenal 4 points clear but City has a game in hand...</div>
+        <div class="serp-featured">
+          <div class="serp-featured-label">🟢 Green Insight — What's Up</div>
+          <div class="serp-featured-text">Arsenal need 3 wins from 5 remaining. City need a slip. It's genuinely 50/50 for the first time since March. Check your FPL captain.</div>
+        </div>
+      </div>
+      <div class="serp-result">
+        <div class="serp-url">bbc.co.uk › sport › football</div>
+        <div class="serp-title">Arsenal 2-2 Chelsea: Match Report</div>
+        <div class="serp-snippet">Bukayo Saka's late equaliser denied Arsenal all three points in a pulsating...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MONETIZATION -->
+<section style="background:var(--cream);">
+  <div class="section-eyebrow">The Business</div>
+  <h2 class="section-headline">Built to grow. <em>Built to last.</em></h2>
+  <p style="margin-top:16px; font-size:16px; color:#5A6E62; max-width:520px; line-height:1.7;">Organic sponsorships that feel right for the audience — not gambling ads slapped on football content.</p>
+
+  <div class="mono-grid reveal">
+    <div class="mono-card">
+      <div class="mono-phase phase-1">Phase 1</div>
+      <div class="mono-icon">🌱</div>
+      <h3>Traffic Growth</h3>
+      <p>SEO-first content strategy targeting intent-based keywords. Goal: 50k monthly readers within 6 months of launch.</p>
+    </div>
+    <div class="mono-card">
+      <div class="mono-phase phase-2">Phase 2</div>
+      <div class="mono-icon">🤝</div>
+      <h3>Group Sponsorships</h3>
+      <p>A sustainable sneaker brand sponsoring "What's Up for Commuters" feels organic. We choose alignment over revenue every time.</p>
+    </div>
+    <div class="mono-card">
+      <div class="mono-phase phase-3">Phase 3</div>
+      <div class="mono-icon">⚡</div>
+      <h3>Premium Groups</h3>
+      <p>Paid tiers for niche communities — investors, fantasy managers, local politics. High value, low friction.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <h2 class="cta-headline">Get the first green card.</h2>
+  <p class="cta-sub">Pre-MVP. Building the first Arsenal Fan filter view as proof of concept. Join 200+ people on the early list.</p>
+  <div class="cta-actions">
+    <a href="#" class="btn-white">🌿 Join the Early List</a>
+    <a href="#" class="btn-outline-white">📬 See a Sample Card</a>
+  </div>
+  <p style="margin-top:32px; font-size:13px; color:rgba(255,255,255,0.4); position:relative;">No spam. Just the green dot in your inbox.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">
+    <div class="footer-dot"><span>?</span></div>
+    <span class="footer-wordmark">What's Up</span>
+  </a>
+  <span>World News. Football. The Group Chat.</span>
+  <ul class="footer-links">
+    <li><a href="#">Football</a></li>
+    <li><a href="#">World</a></li>
+    <li><a href="#">Commuter</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Animated meter widths
+  document.querySelectorAll('.meter-fill').forEach(el => {
+    const w = el.style.width;
+    el.style.width = '0%';
+    setTimeout(() => {
+      el.style.transition = 'width 1.2s ease';
+      el.style.width = w;
+    }, 800);
+  });
+</script>
+</body>
+</html>
