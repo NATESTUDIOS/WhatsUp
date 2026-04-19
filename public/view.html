@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What's Up \u2014 Football</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sage:    #4A7C59;
+    --mint:    #7EC8A4;
+    --lime:    #E8F5EE;
+    --deep:    #1B3A2D;
+    --ink:     #141F1A;
+    --cream:   #FAFAF7;
+    --white:   #FFFFFF;
+    --muted:   #7A8E82;
+    --border:  #E4EDE8;
+    --blue:    #3B82C4;
+    --blue-bg: #EFF6FF;
+    --gold:    #C98A1A;
+    --gold-bg: #FDF6E7;
+    --red:     #D94F4F;
+    --red-bg:  #FEF2F2;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* \u2500\u2500 SIDEBAR LAYOUT \u2500\u2500 */
+  .layout {
+    display: grid;
+    grid-template-columns: 260px 1fr 300px;
+    min-height: 100vh;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  /* \u2500\u2500 LEFT NAV \u2500\u2500 */
+  .sidebar-left {
+    padding: 28px 20px;
+    border-right: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    padding: 4px 0;
+  }
+
+  .logo-dot {
+    width: 34px; height: 34px;
+    background: var(--sage);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .logo-dot::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 2px solid var(--mint);
+    opacity: 0.45;
+    animation: ring 3s ease-in-out infinite;
+  }
+  @keyframes ring {
+    0%,100% { transform: scale(1); opacity: 0.45; }
+    50%      { transform: scale(1.25); opacity: 0; }
+  }
+  .logo-dot span {
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 17px;
+    font-weight: 500;
+  }
+  .logo-name {
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: 19px;
+    color: var(--deep);
+    letter-spacing: -0.2px;
+  }
+
+  /* Group nav */
+  .nav-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    padding: 0 8px;
+  }
+
+  .group-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .group-item a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    transition: background 0.15s, color 0.15s;
+  }
+  .group-item a:hover { background: var(--lime); color: var(--deep); }
+  .group-item.active a {
+    background: var(--lime);
+    color: var(--sage);
+    font-weight: 600;
+  }
+
+  .group-icon {
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+    line-height: 1;
+  }
+
+  .group-badge {
+    margin-left: auto;
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    background: var(--sage);
+    color: white;
+    padding: 2px 7px;
+    border-radius: 100px;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  .sidebar-divider {
+    height: 1px;
+    background: var(--border);
+  }
+
+  .sidebar-bottom {
+    margin-top: auto;
+  }
+
+  .user-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .user-row:hover { background: var(--lime); }
+
+  .user-avatar {
+    width: 32px; height: 32px;
+    background: var(--deep);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .user-name
